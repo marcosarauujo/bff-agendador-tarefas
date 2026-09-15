@@ -6,7 +6,6 @@ import com.javanauta.marcos.bffagendador.infrastructure.enums.StatusNotificacaoE
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +15,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Slf4j
+
 public class CronService {
 
     private final TarefaService tarefaService;
     private final EmailService emailService;
     private final UsuarioService usuarioService;
 
-    @Value("$usuario.email")
+    @Value("${usuario.email}")
     private String email;
 
-    @Value("$usuario.senha")
+    @Value("${usuario.senha}")
     private String senha;
 
     @Scheduled(cron = "${cron.horario}")
@@ -37,7 +37,7 @@ public class CronService {
         LocalDateTime horaFutura = LocalDateTime.now().plusHours(1);
 
         List<TarefasDTOResponse> listaTarefas = tarefaService.buscaTarefaAgendadasPorPeriodo(
-                horaFutura, horaAtual, token);
+                horaAtual,horaFutura, token);
         log.info("Tarefas encontradas" + listaTarefas);
         listaTarefas.forEach(tarefa -> {
             emailService.enviarEmail(tarefa);

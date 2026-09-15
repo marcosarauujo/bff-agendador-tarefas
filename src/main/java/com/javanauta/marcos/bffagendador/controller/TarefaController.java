@@ -45,6 +45,7 @@ public class TarefaController {
 
     @ApiResponse(responseCode = "200", description = "Tarefas encontradas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
 
     public ResponseEntity<List<TarefasDTOResponse>> buscaListaTarefaPorPeriodo(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
@@ -59,6 +60,8 @@ public class TarefaController {
 
     @ApiResponse(responseCode = "200", description = "Tarefas encontradas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "403", description = "Email não encontrado")
+    @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
 
     public ResponseEntity<List<TarefasDTOResponse>> buscaTarefasPorEmail(
             @RequestHeader(name = "Authorization", required = false) String token) {
@@ -71,6 +74,8 @@ public class TarefaController {
 
     @ApiResponse(responseCode = "200", description = "Tarefas deletadas com sucesso")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "403", description = "Tarefa id não encontrado")
+    @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
 
     public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id,
                                                   @RequestHeader(name = "Authorization", required = false) String token) {
@@ -83,6 +88,8 @@ public class TarefaController {
 
     @ApiResponse(responseCode = "200", description = "Status de tarefas alteradas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "403", description = "Tarefa id não encontrado")
+    @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
 
     public ResponseEntity<TarefasDTOResponse> alteraStatus(@RequestParam("status") StatusNotificacaoEnum status,
                                                            @RequestParam("id") String id,
@@ -95,6 +102,8 @@ public class TarefaController {
 
     @ApiResponse(responseCode = "200", description = "Tarefas alteradas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
+    @ApiResponse(responseCode = "403", description = "Tarefa id não encontrado")
+    @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
 
     public ResponseEntity<TarefasDTOResponse> updateTarefas(@RequestBody TarefasDTORequest dto,
                                                             @RequestParam("id") String id,
