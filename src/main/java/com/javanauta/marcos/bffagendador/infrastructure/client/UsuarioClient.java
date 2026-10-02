@@ -1,6 +1,7 @@
 package com.javanauta.marcos.bffagendador.infrastructure.client;
 
 
+import com.javanauta.marcos.bffagendador.business.dto.out.ViaCepDTOResponse;
 import com.javanauta.marcos.bffagendador.business.dto.in.EnderecoDTORequest;
 import com.javanauta.marcos.bffagendador.business.dto.in.LoginDTORequest;
 import com.javanauta.marcos.bffagendador.business.dto.in.TelefoneDTORequest;
@@ -52,5 +53,8 @@ public interface UsuarioClient {
     @PostMapping("/telefone")
     TelefoneDTOResponse cadastraTelefone(@RequestBody TelefoneDTORequest dto,
                                          @RequestHeader("Authorization") String token);
+
+    @GetMapping("/endereco/{cep}")
+    ViaCepDTOResponse buscarDadosDeEndereco(@PathVariable("cep") String cep);
 
 }

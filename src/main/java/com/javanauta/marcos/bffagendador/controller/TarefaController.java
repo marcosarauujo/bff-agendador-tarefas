@@ -36,7 +36,8 @@ public class TarefaController {
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
 
     public ResponseEntity<TarefasDTOResponse> gravarTarefas(@RequestBody TarefasDTORequest dto,
-                                                            @RequestHeader(name = "Authorization", required = false) String token) {
+                                                            @RequestHeader(name = "Authorization",
+                                                                    required = false) String token) {
         return ResponseEntity.ok(tarefaService.gravarTarefas(token, dto));
     }
 
@@ -56,7 +57,8 @@ public class TarefaController {
     }
 
     @GetMapping
-    @Operation(summary = "Buscas lista de tarefas por email de usuário", description = "Busca de tarefas cadastradas por usuário")
+    @Operation(summary = "Buscas lista de tarefas por email de usuário",
+            description = "Busca de tarefas cadastradas por usuário")
 
     @ApiResponse(responseCode = "200", description = "Tarefas encontradas")
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
@@ -78,7 +80,8 @@ public class TarefaController {
     @ApiResponse(responseCode = "401", description = "Usuário não autorizado")
 
     public ResponseEntity<Void> deletaTarefaPorId(@RequestParam("id") String id,
-                                                  @RequestHeader(name = "Authorization", required = false) String token) {
+                                                  @RequestHeader(name = "Authorization",
+                                                          required = false) String token) {
         tarefaService.deletaTarefaPorId(id, token);
         return ResponseEntity.ok().build();
     }
@@ -93,7 +96,8 @@ public class TarefaController {
 
     public ResponseEntity<TarefasDTOResponse> alteraStatus(@RequestParam("status") StatusNotificacaoEnum status,
                                                            @RequestParam("id") String id,
-                                                           @RequestHeader(name = "Authorization", required = false) String token) {
+                                                           @RequestHeader(name = "Authorization",
+                                                                   required = false) String token) {
         return ResponseEntity.ok(tarefaService.alteraStatus(status, id, token));
     }
 
@@ -107,7 +111,8 @@ public class TarefaController {
 
     public ResponseEntity<TarefasDTOResponse> updateTarefas(@RequestBody TarefasDTORequest dto,
                                                             @RequestParam("id") String id,
-                                                            @RequestHeader(name = "Authorization", required = false) String token) {
+                                                            @RequestHeader(name = "Authorization",
+                                                                    required = false) String token) {
         return ResponseEntity.ok(tarefaService.updateTarefas(dto, id, token));
     }
 }
