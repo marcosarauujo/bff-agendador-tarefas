@@ -1,6 +1,7 @@
 package com.javanauta.marcos.bffagendador.infrastructure.exceptions;
 
-public class ConflictException extends RuntimeException {
+public class
+ConflictException extends RuntimeException {
     public ConflictException(String mensagem) {
 
         super(mensagem);

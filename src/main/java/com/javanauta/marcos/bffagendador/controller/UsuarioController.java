@@ -8,6 +8,7 @@ import com.javanauta.marcos.bffagendador.business.dto.in.UsuarioDTORequest;
 import com.javanauta.marcos.bffagendador.business.dto.out.EnderecoDTOResponse;
 import com.javanauta.marcos.bffagendador.business.dto.out.TelefoneDTOResponse;
 import com.javanauta.marcos.bffagendador.business.dto.out.UsuarioDTOResponse;
+import com.javanauta.marcos.bffagendador.business.dto.out.ViaCepDTOResponse;
 import com.javanauta.marcos.bffagendador.infrastructure.security.SecurityConfig;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -48,7 +49,6 @@ public class UsuarioController {
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
 
     public String login(@RequestBody LoginDTORequest usuarioDTO) {
-
         return usuarioService.loginUsuario(usuarioDTO);
     }
 
@@ -61,7 +61,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
 
     public ResponseEntity<UsuarioDTOResponse> buscarUsuarioPorEmail(@RequestParam("email") String email,
-                                                                    @RequestHeader(name = "Authorization", required = false) String token) {
+                                                                    @RequestHeader(name = "Authorization",
+                                                                            required = false) String token) {
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email, token));
     }
 
@@ -74,7 +75,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
 
     public ResponseEntity<Void> deletaUsuarioPorEmail(@PathVariable String email,
-                                                      @RequestHeader(name = "Authorization", required = false) String token) {
+                                                      @RequestHeader(name = "Authorization", required = false)
+                                                      String token) {
         usuarioService.deletaUsuarioPorEmail(email, token);
         return ResponseEntity.ok().build();
     }
@@ -88,7 +90,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
 
     public ResponseEntity<UsuarioDTOResponse> atualizaDadosUsuario(@RequestBody UsuarioDTORequest dto,
-                                                                   @RequestHeader(name = "Authorization", required = false) String token) {
+                                                                   @RequestHeader(name = "Authorization",
+                                                                           required = false) String token) {
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(dto, token));
     }
 
@@ -102,7 +105,8 @@ public class UsuarioController {
 
     public ResponseEntity<EnderecoDTOResponse> atualizaEndereco(@RequestBody EnderecoDTORequest dto,
                                                                 @RequestParam("id") Long id,
-                                                                @RequestHeader(name = "Authorization", required = false) String token) {
+                                                                @RequestHeader(name = "Authorization",
+                                                                        required = false) String token) {
         return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto, token));
     }
 
@@ -116,7 +120,8 @@ public class UsuarioController {
 
     public ResponseEntity<TelefoneDTOResponse> atualizaTelefone(@RequestBody TelefoneDTORequest dto,
                                                                 @RequestParam("id") Long id,
-                                                                @RequestHeader(name = "Authorization", required = false) String token) {
+                                                                @RequestHeader(name = "Authorization",
+                                                                        required = false) String token) {
         return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto, token));
     }
 
@@ -128,7 +133,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "500", description = "Erro de servidor")
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
 
-    public ResponseEntity<EnderecoDTOResponse> cadastraEndereco(@RequestHeader(name = "Authorization", required = false) String token,
+    public ResponseEntity<EnderecoDTOResponse> cadastraEndereco(@RequestHeader(name = "Authorization",
+                                                                        required = false) String token,
                                                                 @RequestBody EnderecoDTORequest dto) {
         return ResponseEntity.ok(usuarioService.cadastraEndereco(token, dto));
     }
@@ -142,8 +148,20 @@ public class UsuarioController {
     @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
 
     public ResponseEntity<TelefoneDTOResponse> cadastraTelefone(@RequestBody TelefoneDTORequest dto,
-                                                                @RequestHeader(name = "Authorization", required = false) String token) {
+                                                                @RequestHeader(name = "Authorization",
+                                                                        required = false) String token) {
         return ResponseEntity.ok(usuarioService.cadastraTelefone(token, dto));
+    }
+
+    @GetMapping("/endereco/{cep}")
+    @Operation(summary = "Busca endereço pelo Cep", description = "Busca dados de Endereço,  recebendo um cep")
+
+    @ApiResponse(responseCode = "200", description = "Endereço retornado com sucesso")
+    @ApiResponse(responseCode = "400", description = "CEP inválido")
+    @ApiResponse(responseCode = "500", description = "Erro de servidor")
+
+    public ResponseEntity<ViaCepDTOResponse> buscarEnderecoPorCep(@PathVariable("cep") String cep) {
+        return ResponseEntity.ok(usuarioService.buscarEnderecoPorCep(cep));
     }
 
 }
